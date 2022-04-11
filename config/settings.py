@@ -8,7 +8,7 @@ TESTING = False
 
 CONFIG_FILE = './config/conf.yaml'
 if TESTING or not os.path.isfile(CONFIG_FILE):
-    CONFIG_FILE = './config/conf_example.yaml'
+    CONFIG_FILE = './config/conf_test.yaml'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -1,15 +1,18 @@
 from pathlib import Path
 import os
 import yaml
-
+import pymysql
 
 # Add Security Settings in conf.yaml
 TESTING = False
 
 CONFIG_FILE = './config/conf.yaml'
 if TESTING or not os.path.isfile(CONFIG_FILE):
-    CONFIG_FILE = './config/conf_test.yaml'
-
+    CONFIG_FILE = './config/conf.yaml.example'
+    
+# Add Security Settings in conf.yaml
+with open(CONFIG_FILE, 'r') as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vq#+do--$%6zz4f#nw%poquohw=7fdou5^#h@o99^dv2kfwf5k'
+SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -116,12 +119,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': config['DATABASE']['ENGINE'],
+        'NAME': config['DATABASE']['NAME'],
+        'USER': config['DATABASE']['USER'],
+        'PASSWORD': config['DATABASE']['PASSWORD'],
+        'HOST': config['DATABASE']["HOST"],
+        'PORT': config['DATABASE']['PORT'],
+    },
 }
 
 

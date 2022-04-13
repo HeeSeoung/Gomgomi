@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-import requests
+import requests, json
 
 # Create your views here.
 class ChatbotView(APIView):
@@ -12,13 +12,12 @@ class ChatbotView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = (TokenAuthentication, )
 
-    def get(self, request):
+    def post(self, request):
         context = {}
         user = request.user.id
         sent = request.data['sent']
+        data = {'sent': sent}
+        response = requests.post('http://127.0.0.1:8000/predict', data=json.dumps(data))
+        result = response.json()['response']
 
-        data = {'sent': sent }
-        response = requests.post('http://127.0.0.1:8000/predict', data=data)
-        print(response)
-
-        return Response(context)
+        return Response(result)

@@ -1,2 +1,2 @@
-# gomgomi
-gomgomi Backend Server
+# Gomgomi
+Gomgomi Backend Server

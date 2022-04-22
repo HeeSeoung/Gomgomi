@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -8,7 +7,6 @@ from .models import chat_info
 from .serializers import ChatbotSerializer
 import requests, json
 
-# Create your views here.
 class ChatbotView(APIView):
 
     permission_classes = [IsAuthenticated]
@@ -25,16 +23,14 @@ class ChatbotView(APIView):
     def post(self, request):
         context = {}
         sent = request.data['sent']
-        data = {'sent': sent}
-        response = requests.post('http://127.0.0.1:8000/predict', data=json.dumps(data))
-        result = response.json()['response']
-        
         create_chatinfo(
             user = request.user.id,
             context = sent,
             chat_flag = 0
         )
-
+        data = {'sent': sent}
+        response = requests.post('http://127.0.0.1:8000/predict', data=json.dumps(data))
+        result = response.json()['response']
         create_chatinfo(
             user = request.user.id,
             context = result,

@@ -14,3 +14,4 @@ class ChatbotSerializer(serializers.ModelSerializer):
     class meta:
         model = chat_info
         fields = '__all__'
+        

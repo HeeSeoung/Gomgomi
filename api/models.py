@@ -8,6 +8,7 @@ class chat_info(models.Model):
     context = models.CharField(db_column='context', max_length=200, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     chat_flag = models.CharField(db_column='chat_flag', max_length=10, blank=True, null=True)
+    conversation_id = models.IntegerField(db_column="conversation_id", null=True, blank=True)
 
     class Meta:
         db_table = 'chat_info'

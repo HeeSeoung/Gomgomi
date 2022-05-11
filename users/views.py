@@ -1,10 +1,10 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
+from braces.views import CsrfExemptMixin
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
-from braces.views import CsrfExemptMixin
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class RegisterView(APIView, CsrfExemptMixin):
@@ -17,7 +17,7 @@ class RegisterView(APIView, CsrfExemptMixin):
 
         user = User.objects.create_user(
             username=request.data['id'],
-            password=request.data['password'], 
+            password=request.data['password'],
             email=request.data['email']
         )
 
@@ -39,7 +39,7 @@ class LoginView(APIView, CsrfExemptMixin):
             username=request.data['id'],
             password=request.data['password']
         )
-        
+
         if user is not None:
             token = Token.objects.get(user=user)
             return Response({"Token": token.key})

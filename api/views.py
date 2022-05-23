@@ -109,7 +109,6 @@ class VoiceChatbotView(APIView):
             headers=headers,
             data=data.encode(encoding="utf-8"),
         )
-
         create_voice_chatinfo(
             user=request.user.id,
             context=result,
@@ -118,7 +117,7 @@ class VoiceChatbotView(APIView):
         )
 
         context["response"] = result
-        context["voice"] = audio
+        context["voice"] = response.content
 
         return Response(context)
 

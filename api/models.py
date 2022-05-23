@@ -24,7 +24,7 @@ class voice_chat_info(models.Model):
 
     user = models.CharField(max_length=100, blank=True, null=True)
     context = models.CharField(max_length=200, blank=True, null=True)
-    voice = models.FileField(upload_to="voice_chat/")
+    voice = models.FileField(upload_to="voice_chat")
     created = models.DateTimeField(auto_now_add=True, null=True)
     chat_flag = models.CharField(max_length=10, blank=True, null=True)
     conversation_id = models.IntegerField(null=True, blank=True)

@@ -1,17 +1,23 @@
 import json
 
 import requests
+from django.core.files.base import ContentFile
+from google.cloud import speech
+from pydub import AudioSegment
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import chat_info, life_quotes
-from .serializers import ChatbotSerializer, QuotesSerializer
+from .models import chat_info, life_quotes, voice_chat_info
+from .serializers import ChatbotSerializer, QuotesSerializer, VoiceChatbotSerializer
 
 
 class QuotesViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
     queryset = life_quotes.objects.all()
     serializer_class = QuotesSerializer
 
@@ -27,7 +33,7 @@ class QuotesViewSet(viewsets.ModelViewSet):
 class ChatbotView(APIView):
 
     permission_classes = [IsAuthenticated]
-    authentication_classes = (TokenAuthentication, )
+    authentication_classes = (TokenAuthentication,)
 
     def get(self, request):
 
@@ -39,28 +45,98 @@ class ChatbotView(APIView):
 
     def post(self, request):
         context = {}
-        sent = request.data['sent']
+        sent = request.data["sent"]
+        create_chatinfo(user=request.user.id, context=sent, chat_flag=0)
+        data = {"sent": sent}
+        response = requests.post("http://127.0.0.1:8000/predict", data=json.dumps(data))
+        result = response.json()["response"]
         create_chatinfo(
-            user=request.user.id,
-            context=sent,
-            chat_flag=0
-        )
-        data = {'sent': sent}
-        response = requests.post(
-            'http://127.0.0.1:8000/predict', data=json.dumps(data))
-        result = response.json()['response']
-        create_chatinfo(
-            user=request.user.id,
-            context=result,
-            chat_flag=1,
+            user=request.user.id, context=result, chat_flag=1,
         )
         return Response(result)
 
 
+class VoiceChatbotView(APIView):
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request):
+
+        user = request.user.id
+        queryset = chat_info.objects.filter(user=user)
+        serializers = ChatbotSerializer(queryset, many=True)
+
+        return Response(serializers.data)
+
+    def post(self, request):
+        context = {}
+        voice = request.FILES["voice"]
+
+        # Instantiates a client
+        client = speech.SpeechClient()
+        audio = speech.RecognitionAudio(content=voice.read())
+
+        config = speech.RecognitionConfig(
+            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+            sample_rate_hertz=48000,
+            audio_channel_count=2,
+            language_code="ko-KR",
+        )
+
+        # Detects speech in the audio file
+        response = client.recognize(config=config, audio=audio)
+        text = response.results[0].alternatives[0].transcript
+
+        # Create user voice data
+        create_voice_chatinfo(
+            user=request.user.id, context=text, voice=voice, chat_flag=0
+        )
+
+        # Request chatbot api
+        data = {"sent": text}
+        response = requests.post("http://127.0.0.1:8000/predict", data=json.dumps(data))
+        result = response.json()["response"]
+
+        # Kakao API : TTS
+        headers = {
+            "Authorization": f"KakaoAK 80b269050cd58c9743d68720ddc84692",
+            "Content-Type": "application/xml",
+        }
+        data = f'<voice name="WOMAN_DIALOG_BRIGHT">{result}</voice>'
+        response = requests.post(
+            "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",
+            headers=headers,
+            data=data.encode(encoding="utf-8"),
+        )
+
+        create_voice_chatinfo(
+            user=request.user.id,
+            context=result,
+            chat_flag=1,
+            voice=ContentFile(response.content),
+        )
+
+        context["response"] = result
+        context["voice"] = audio
+
+        return Response(context)
+
+
 def create_chatinfo(**kwargs):
     created = chat_info.objects.create(
-        user=kwargs.get('user', None),
-        context=kwargs.get('context', None),
-        chat_flag=kwargs.get('chat_flag', None)
+        user=kwargs.get("user", None),
+        context=kwargs.get("context", None),
+        chat_flag=kwargs.get("chat_flag", None),
+    )
+    return created
+
+
+def create_voice_chatinfo(**kwargs):
+    created = voice_chat_info.objects.create(
+        user=kwargs.get("user", None),
+        context=kwargs.get("context", None),
+        voice=kwargs.get("voice", None),
+        chat_flag=kwargs.get("chat_flag", None),
     )
     return created

@@ -73,7 +73,7 @@ class VoiceChatbotView(APIView):
         context = {}
         voice = request.FILES["voice"]
 
-        # Instantiates a client
+        # instantiates a client
         client = speech.SpeechClient()
         audio = speech.RecognitionAudio(content=voice.read())
 
@@ -84,21 +84,21 @@ class VoiceChatbotView(APIView):
             language_code="ko-KR",
         )
 
-        # Detects speech in the audio file
+        # detects speech in the audio file
         response = client.recognize(config=config, audio=audio)
         text = response.results[0].alternatives[0].transcript
 
-        # Create user voice data
+        # create user voice data
         create_voice_chatinfo(
             user=request.user.id, context=text, voice=voice, chat_flag=0
         )
 
-        # Request chatbot api
+        # request chatbot api
         data = {"sent": text}
         response = requests.post("http://127.0.0.1:8000/predict", data=json.dumps(data))
         result = response.json()["response"]
 
-        # Kakao API : TTS
+        # kakao api : TTS
         headers = {
             "Authorization": f"KakaoAK 80b269050cd58c9743d68720ddc84692",
             "Content-Type": "application/xml",

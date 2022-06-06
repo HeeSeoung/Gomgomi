@@ -14,6 +14,10 @@ from rest_framework.views import APIView
 from .models import chat_info, life_quotes, voice_chat_info
 from .serializers import ChatbotSerializer, QuotesSerializer, VoiceChatbotSerializer
 
+os.environ[
+    "GOOGLE_APPLICATION_CREDENTIALS"
+] = "/home/gnltmd23/google/top-opus-295719-fef89252bd16.json"
+
 
 class QuotesViewSet(viewsets.ModelViewSet):
 
@@ -49,7 +53,9 @@ class ChatbotView(APIView):
         sent = request.data["sent"]
         create_chatinfo(user=request.user.id, context=sent, chat_flag=0)
         data = {"sent": sent}
-        response = requests.post("http://34.64.69.248:8000/predict", data=json.dumps(data))
+        response = requests.post(
+            "http://34.64.69.248:8000/predict", data=json.dumps(data)
+        )
         result = response.json()["response"]
         create_chatinfo(
             user=request.user.id, context=result, chat_flag=1,
@@ -96,7 +102,9 @@ class VoiceChatbotView(APIView):
 
         # request chatbot api
         data = {"sent": text}
-        response = requests.post("http://34.64.69.248:8000/predict", data=json.dumps(data))
+        response = requests.post(
+            "http://34.64.69.248:8000/predict", data=json.dumps(data)
+        )
         result = response.json()["response"]
 
         # kakao api : TTS

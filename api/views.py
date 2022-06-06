@@ -84,7 +84,7 @@ class VoiceChatbotView(APIView):
 
         # instantiates a client
         client = speech.SpeechClient()
-        audio = speech.RecognitionAudio(content=voice.read())
+        audio = speech.RecognitionAudio(content=voice.encode("ascii"))
 
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,

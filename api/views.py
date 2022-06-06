@@ -78,7 +78,8 @@ class VoiceChatbotView(APIView):
 
     def post(self, request):
         context = {}
-        print(request)
+        print(request.POST)
+        print(request.FILES)
         voice = request.FILES["voice"]
 
         # instantiates a client

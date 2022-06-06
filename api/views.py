@@ -48,7 +48,7 @@ class ChatbotView(APIView):
         sent = request.data["sent"]
         create_chatinfo(user=request.user.id, context=sent, chat_flag=0)
         data = {"sent": sent}
-        response = requests.post("http://127.0.0.1:8000/predict", data=json.dumps(data))
+        response = requests.post("http://34.64.69.248:8000/predict", data=json.dumps(data))
         result = response.json()["response"]
         create_chatinfo(
             user=request.user.id, context=result, chat_flag=1,
@@ -95,7 +95,7 @@ class VoiceChatbotView(APIView):
 
         # request chatbot api
         data = {"sent": text}
-        response = requests.post("http://127.0.0.1:8000/predict", data=json.dumps(data))
+        response = requests.post("http://34.64.69.248:8000/predict", data=json.dumps(data))
         result = response.json()["response"]
 
         # kakao api : TTS

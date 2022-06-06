@@ -14,3 +14,4 @@ urlpatterns = [
     path('voice_chatbot/', VoiceChatbotView.as_view(), name='voice_chatbot'),
     path('', include(router.urls)),
 ]
+

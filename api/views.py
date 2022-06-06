@@ -16,7 +16,7 @@ from .serializers import ChatbotSerializer, QuotesSerializer, VoiceChatbotSerial
 
 os.environ[
     "GOOGLE_APPLICATION_CREDENTIALS"
-] = "/home/gnltmd23/google/top-opus-295719-fef89252bd16.json"
+] = "/home/gnltmd23/google/vivid-spot-352208-f7e0462f8e6d.json"
 
 
 class QuotesViewSet(viewsets.ModelViewSet):

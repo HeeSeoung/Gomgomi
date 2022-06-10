@@ -80,7 +80,10 @@ class VoiceChatbotView(APIView):
         context = {}
         print(request.POST)
         print(request.FILES)
-        voice = request.FILES["voice"]
+        try:
+            voice = request.FILES["voice"]
+        except Exception:
+            voice = request.POST["voice"]
 
         # instantiates a client
         client = speech.SpeechClient()

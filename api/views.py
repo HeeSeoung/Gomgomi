@@ -101,7 +101,8 @@ class VoiceChatbotView(APIView):
 
         # detects speech in the audio file
         response = client.recognize(config=config, audio=audio)
-        text = response.results[0].alternatives[0].transcript
+        # text = response.results[0].alternatives[0].transcript
+        print(response)
 
         # create user voice data
         create_voice_chatinfo(

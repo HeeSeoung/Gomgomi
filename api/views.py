@@ -1,5 +1,6 @@
 import json
 import os
+import base64
 
 import requests
 from django.core.files.base import ContentFile
@@ -84,6 +85,8 @@ class VoiceChatbotView(APIView):
             voice = request.FILES["voice"]
         except Exception:
             voice = request.POST["voice"]
+            voice = base64.decodebytes(voice)
+            
 
         # instantiates a client
         client = speech.SpeechClient()

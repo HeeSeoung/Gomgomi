@@ -1,7 +1,14 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from users.models import UserSentiment
 
 from .models import chat_info, life_quotes, voice_chat_info
+
+
+class SentimentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserSentiment
+        fields = "__all__"
 
 
 class UserSerializer(serializers.ModelSerializer):

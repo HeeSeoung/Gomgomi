@@ -1,7 +1,6 @@
 import base64
 import json
 import os
-from io import StringIO
 
 import requests
 from django.core.files.base import ContentFile
@@ -12,9 +11,15 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from users.models import user_sentiment
 
 from .models import chat_info, life_quotes, voice_chat_info
-from .serializers import ChatbotSerializer, QuotesSerializer, VoiceChatbotSerializer
+from .serializers import (
+    ChatbotSerializer,
+    QuotesSerializer,
+    SentimentSerializer,
+    VoiceChatbotSerializer,
+)
 
 os.environ[
     "GOOGLE_APPLICATION_CREDENTIALS"
@@ -138,6 +143,17 @@ class VoiceChatbotView(APIView):
         context["voice"] = response.content
 
         return Response(context)
+
+
+class SentimentView(APIView):
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request):
+        user = request.user.id
+        queryset = user_sentiment.objects.filter(user=user)
+        serializers = SentimentSerializer(queryset, many=True)
 
 
 def create_chatinfo(**kwargs):

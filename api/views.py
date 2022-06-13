@@ -11,7 +11,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from users.models import user_sentiment
+from users.models import UserSentiment
 
 from .models import chat_info, life_quotes, voice_chat_info
 from .serializers import (
@@ -152,7 +152,7 @@ class SentimentView(APIView):
 
     def get(self, request):
         user = request.user.id
-        queryset = user_sentiment.objects.filter(user=user)
+        queryset = UserSentiment.objects.filter(user=user)
         serializers = SentimentSerializer(queryset, many=True)
 
 

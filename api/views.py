@@ -155,7 +155,8 @@ class SentimentView(APIView):
         queryset = UserSentiment.objects.filter(user=user)
         serializers = SentimentSerializer(queryset, many=True)
 
-
+        return Response(serializers.data)
+        
 def create_chatinfo(**kwargs):
     created = chat_info.objects.create(
         user=kwargs.get("user", None),

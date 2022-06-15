@@ -94,7 +94,7 @@ class VoiceChatbotView(APIView):
             voice = request.FILES["voice"]
         except Exception:
             voice = request.POST["voice"]
-            voice = StringIO(voice)
+            voice = base64.b64decode(voice)
             # path = f'./media/{get_random_string(length=16)}.wav'
             # AudioSegment.from_files(voice).export(x)
 

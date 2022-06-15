@@ -1,0 +1,11 @@
+SECRET_KEY: 'django-insecure-vq#+do--$%6zz4f#nw%poquohw=7fdou5^#h@o99^dv2kfwf5k'
+
+DATABASE:
+  ENGINE: django.db.backends.mysql
+  NAME: gomgomi
+  USER: root
+  PASSWORD: 12345!
+  HOST: 223.194.46.212
+  PORT: 3306
+
+ALLOWED_HOSTS: ['*']

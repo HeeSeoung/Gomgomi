@@ -1,10 +1,12 @@
 import base64
+import io
 import json
 import os
 from io import StringIO
 
 import requests
 from django.core.files.base import ContentFile
+from django.utils.crypto import get_random_string
 from google.cloud import speech
 from pydub import AudioSegment
 from rest_framework import viewsets
@@ -93,6 +95,8 @@ class VoiceChatbotView(APIView):
         except Exception:
             voice = request.POST["voice"]
             voice = StringIO(voice)
+            # path = f'./media/{get_random_string(length=16)}.wav'
+            # AudioSegment.from_files(voice).export(x)
 
         # instantiates a client
         client = speech.SpeechClient()

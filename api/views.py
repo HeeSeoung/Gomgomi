@@ -1,6 +1,7 @@
 import base64
 import json
 import os
+from io import StringIO
 
 import requests
 from django.core.files.base import ContentFile
@@ -156,7 +157,8 @@ class SentimentView(APIView):
         serializers = SentimentSerializer(queryset, many=True)
 
         return Response(serializers.data)
-        
+
+
 def create_chatinfo(**kwargs):
     created = chat_info.objects.create(
         user=kwargs.get("user", None),

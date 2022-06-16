@@ -139,11 +139,8 @@ class VoiceChatbotView(APIView):
             chat_flag=1,
             voice=ContentFile(response.content),
         )
-
-        context['voice'] = base64.b64encode(response.content)
-        context['text'] = result
-
-        return HttpResponse(context)
+        
+        return HttpResponse(base64.b64encode(response.content), result)
 
 
 class SentimentView(APIView):

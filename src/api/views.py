@@ -144,7 +144,7 @@ class VoiceChatbotView(APIView):
         )
 
         context["response"] = result
-        # context["voice"] = io.BytesIO(response.content)
+        context["voice"] = io.BytesIO(response.content)
 
         return Response(context)
 

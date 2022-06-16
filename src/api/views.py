@@ -140,7 +140,7 @@ class VoiceChatbotView(APIView):
             voice=ContentFile(response.content),
         )
 
-        response = HttpResponse(base64.b64encode(response.content))
+        response = HttpResponse(response.content)
 
         return response
 

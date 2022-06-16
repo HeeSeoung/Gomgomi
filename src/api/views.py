@@ -3,10 +3,10 @@ import io
 import json
 import os
 from io import StringIO
-from django.http import HttpResponse
 
 import requests
 from django.core.files.base import ContentFile
+from django.http import HttpResponse
 from django.utils.crypto import get_random_string
 from google.cloud import speech
 from pydub import AudioSegment
@@ -27,7 +27,7 @@ from .serializers import (
 
 os.environ[
     "GOOGLE_APPLICATION_CREDENTIALS"
-] = "/home/gnltmd23/google/vivid-spot-352208-f7e0462f8e6d.json"
+] ="/Users/hiseoung/google/vivid-spot-352208-f7e0462f8e6d.json"
 
 
 class QuotesViewSet(viewsets.ModelViewSet):
@@ -91,16 +91,13 @@ class VoiceChatbotView(APIView):
         context = {}
         try:
             voice = request.FILES["voice"]
-            # instantiates a client
-            client = speech.SpeechClient()
-            audio = speech.RecognitionAudio(content=voice.read())
         except Exception as e:
-            print(e)
             voice = request.POST["voice"]
             voice = base64.b64decode(voice)
-            # instantiates a client
-            client = speech.SpeechClient()
-            audio = speech.RecognitionAudio(content=voice)
+
+        # instantiates a client
+        client = speech.SpeechClient()
+        audio = speech.RecognitionAudio(content=voice)
 
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
@@ -130,7 +127,7 @@ class VoiceChatbotView(APIView):
             "Authorization": f"KakaoAK 80b269050cd58c9743d68720ddc84692",
             "Content-Type": "application/xml",
         }
-        data = f'<voice name="WOMAN_DIALOG_BRIGHT">{result}</voice>'
+        data = f'<speak><voice name="WOMAN_DIALOG_BRIGHT">{result}</voice></speak>'
         response = requests.post(
             "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",
             headers=headers,
@@ -143,6 +140,7 @@ class VoiceChatbotView(APIView):
             voice=ContentFile(response.content),
         )
 
+        print(response)
         result = io.BytesIO(response.content)
         audio = AudioSegment.from_file(result, "mp3")
         path = f'./media/{get_random_string(length=16)}.mp3'
@@ -155,6 +153,7 @@ class VoiceChatbotView(APIView):
         response.write(f.read())
         response['Content-Type'] ='audio/wav'
         response['Content-Length'] =os.path.getsize(path)
+        response['text'] = result
 
         return response
         # context["response"] = result

@@ -90,7 +90,7 @@ class VoiceChatbotView(APIView):
     def post(self, request):
         context = {}
         try:
-            voice = request.FILES["voice"]
+            voice = request.FILES["voice"].read()
         except Exception as e:
             voice = request.POST["voice"]
             voice = base64.b64decode(voice)
@@ -140,13 +140,10 @@ class VoiceChatbotView(APIView):
             voice=ContentFile(response.content),
         )
 
-        print(response)
         result = io.BytesIO(response.content)
         audio = AudioSegment.from_file(result, "mp3")
         path = f'./media/{get_random_string(length=16)}.mp3'
         audio.export(path, format='wav')
-
-        print(111)
 
         f = open(path,"rb") 
         response = HttpResponse()
@@ -155,10 +152,6 @@ class VoiceChatbotView(APIView):
         response['Content-Length'] =os.path.getsize(path)
 
         return response
-        # context["response"] = result
-        # context["voice"] = io.BytesIO(response.content)
-
-        # return Response(context)
 
 
 class SentimentView(APIView):

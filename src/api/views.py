@@ -141,7 +141,7 @@ class VoiceChatbotView(APIView):
         )
 
         response = HttpResponse(base64.b64encode(response.content))
-        response['result'] = base64.b64encode(result)
+        response['result'] = base64.b64encode(json.dumps(result))
 
         return response
 

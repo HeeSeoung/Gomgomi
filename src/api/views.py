@@ -112,7 +112,7 @@ class VoiceChatbotView(APIView):
 
         # create user voice data
         create_voice_chatinfo(
-            user=request.user.id, context=text, voice=voice, chat_flag=0
+            user=request.user.id, context=text, chat_flag=0
         )
 
         # request chatbot api
@@ -137,7 +137,7 @@ class VoiceChatbotView(APIView):
             user=request.user.id,
             context=result,
             chat_flag=1,
-            voice=ContentFile(response.content),
+            voice=ContentFile(io.BytesIO(response.content)),
         )
 
         context["response"] = result

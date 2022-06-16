@@ -141,7 +141,7 @@ class VoiceChatbotView(APIView):
         )
 
         context['voice'] = base64.b64encode(response.content)
-        context['text'] = json.dump(result)
+        context['text'] = json.dumps(result)
 
         return HttpResponse(context)
 

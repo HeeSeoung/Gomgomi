@@ -42,7 +42,7 @@ class LoginView(APIView, CsrfExemptMixin):
 
         if user is not None:
             token = Token.objects.get(user=user)
-            email = User.objects.get(user=user).values_list('email')[0]
+            email = User.objects.get(username=request.data['id']).values_list('email')[0]
             return Response({"Token": token.key, "email": email})
         else:
             return Response(status=401)

@@ -137,7 +137,7 @@ class VoiceChatbotView(APIView):
             user=request.user.id,
             context=result,
             chat_flag=1,
-            voice=ContentFile(io.BytesIO(response.content)),
+            voice=ContentFile(response.content),
         )
 
         context["response"] = result

@@ -27,7 +27,7 @@ from .serializers import (
 
 os.environ[
     "GOOGLE_APPLICATION_CREDENTIALS"
-] ="/Users/hiseoung/google/vivid-spot-352208-f7e0462f8e6d.json"
+] = "/home/gnltmd23/google/vivid-spot-352208-f7e0462f8e6d.json"
 
 
 class QuotesViewSet(viewsets.ModelViewSet):
@@ -97,7 +97,7 @@ class VoiceChatbotView(APIView):
 
         # instantiates a client
         client = speech.SpeechClient()
-        audio = speech.RecognitionAudio(content=voice)
+        audio = speech.RecognitionAudio(content=voice.read())
 
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
@@ -127,7 +127,7 @@ class VoiceChatbotView(APIView):
             "Authorization": f"KakaoAK 80b269050cd58c9743d68720ddc84692",
             "Content-Type": "application/xml",
         }
-        data = f'<speak><voice name="WOMAN_DIALOG_BRIGHT">{result}</voice></speak>'
+        data = f'<speak?><voice name="WOMAN_DIALOG_BRIGHT">{result}</voice></speak?'
         response = requests.post(
             "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",
             headers=headers,
@@ -153,7 +153,6 @@ class VoiceChatbotView(APIView):
         response.write(f.read())
         response['Content-Type'] ='audio/wav'
         response['Content-Length'] =os.path.getsize(path)
-        response['text'] = result
 
         return response
         # context["response"] = result

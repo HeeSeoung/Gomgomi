@@ -144,11 +144,8 @@ class VoiceChatbotView(APIView):
         )
 
         result = io.BytesIO(response.content)
-        try:
-            audio = AudioSegment.from_file(result, "mp3")
-        except:
-            audio = AudioSegment.from_file(result, format="mp4")
-        path = f'./media/{get_random_string(length=16)}.wav'
+        audio = AudioSegment.from_file(result, "mp3")
+        path = f'./media/{get_random_string(length=16)}.mp3'
         audio.export(path, format='wav')
 
         print(111)

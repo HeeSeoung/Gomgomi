@@ -88,7 +88,6 @@ class VoiceChatbotView(APIView):
 
     def post(self, request):
         context = {}
-        print(request.POST)
         try:
             voice = request.FILES["voice"]
         except Exception:

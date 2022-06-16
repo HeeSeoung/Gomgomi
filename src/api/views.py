@@ -144,10 +144,10 @@ class VoiceChatbotView(APIView):
         context['result'] = result
 
         response = HttpResponse(
-            base64.b64encode(response.content),
+            context,
             content_type=u"application/json; charset=utf-8"
             )
-        response['result'] = result
+        # response['result'] = result
 
         # response = HttpResponse(context)
         return response

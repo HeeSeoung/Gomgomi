@@ -94,8 +94,6 @@ class VoiceChatbotView(APIView):
         except Exception:
             voice = request.POST["voice"]
             voice = base64.b64decode(voice)
-            path = f'./media/{get_random_string(length=16)}.wav'
-            file = AudioSegment.from_files(voice, 'wav').export(path)
 
         # instantiates a client
         client = speech.SpeechClient()
@@ -143,7 +141,7 @@ class VoiceChatbotView(APIView):
         )
 
         context["response"] = result
-        context["voice"] = response.content
+        context["voice"] = io.BytesIO(response.content)
 
         return Response(context)
 

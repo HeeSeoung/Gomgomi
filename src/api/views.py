@@ -3,7 +3,7 @@ import io
 import json
 import os
 from io import StringIO
-from django.http import FileResponse
+from django.http import HttpResponse
 
 import requests
 from django.core.files.base import ContentFile
@@ -143,10 +143,22 @@ class VoiceChatbotView(APIView):
             voice=ContentFile(response.content),
         )
 
-        context["response"] = result
-        context["voice"] = io.BytesIO(response.content)
+        result = io.BytesIO(response.content)
+        audio = AudioSegment.from_file(result)
+        path = f'./{get_random_string(length=16)}.wav'
+        audio.export(path, format='wav')
 
-        return Response(context)
+        f = open(path,"rb") 
+        response = HttpResponse()
+        response.write(f.read())
+        response['Content-Type'] ='audio/wav'
+        response['Content-Length'] =os.path.getsize(path)
+
+        return response
+        # context["response"] = result
+        # context["voice"] = io.BytesIO(response.content)
+
+        # return Response(context)
 
 
 class SentimentView(APIView):

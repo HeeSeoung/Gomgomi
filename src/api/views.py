@@ -3,6 +3,7 @@ import io
 import json
 import os
 from io import StringIO
+from django.http import FileResponse
 
 import requests
 from django.core.files.base import ContentFile
@@ -143,7 +144,7 @@ class VoiceChatbotView(APIView):
         context["response"] = result
         context["voice"] = io.BytesIO(response.content)
 
-        return Response(context)
+        return FileResponse(io.BytesIO(response.content))
 
 
 class SentimentView(APIView):

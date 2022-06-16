@@ -16,8 +16,9 @@ class RegisterView(APIView, CsrfExemptMixin):
     def post(self, request):
 
         user = User.objects.create_user(
-            username=request.data['email'],
+            username=request.data['id'],
             password=request.data['password'],
+            email=request.data['email']
         )
 
         user.save()
@@ -41,6 +42,7 @@ class LoginView(APIView, CsrfExemptMixin):
 
         if user is not None:
             token = Token.objects.get(user=user)
-            return Response({"Token": token.key})
+            email = User.objects.get(user=user).values_list('email')[0]
+            return Response({"Token": token.key, "email": email})
         else:
             return Response(status=401)

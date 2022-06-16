@@ -16,9 +16,8 @@ class RegisterView(APIView, CsrfExemptMixin):
     def post(self, request):
 
         user = User.objects.create_user(
-            username=request.data['id'],
+            username=request.data['email'],
             password=request.data['password'],
-            email=request.data['email']
         )
 
         user.save()

@@ -150,17 +150,17 @@ class VoiceChatbotView(APIView):
 
         print(111)
 
-        # f = open(path,"rb") 
-        # response = HttpResponse()
-        # response.write(f.read())
-        # response['Content-Type'] ='audio/wav'
-        # response['Content-Length'] =os.path.getsize(path)
+        f = open(path,"rb") 
+        response = HttpResponse()
+        response.write(f.read())
+        response['Content-Type'] ='audio/wav'
+        response['Content-Length'] =os.path.getsize(path)
 
-        # return response
-        context["response"] = result
-        context["voice"] = io.BytesIO(response.content)
+        return response
+        # context["response"] = result
+        # context["voice"] = io.BytesIO(response.content)
 
-        return Response(context)
+        # return Response(context)
 
 
 class SentimentView(APIView):

@@ -18,13 +18,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ChatbotSerializer(serializers.ModelSerializer):
-    class meta:
+    class Meta:
         model = chat_info
         fields = "__all__"
 
 
 class VoiceChatbotSerializer(serializers.ModelSerializer):
-    class meta:
+    class Meta:
         model = voice_chat_info
         fields = "__all__"
 

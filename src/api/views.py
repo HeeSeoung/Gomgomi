@@ -91,14 +91,16 @@ class VoiceChatbotView(APIView):
         context = {}
         try:
             voice = request.FILES["voice"]
+            # instantiates a client
+            client = speech.SpeechClient()
+            audio = speech.RecognitionAudio(content=voice.read())
         except Exception as e:
             print(e)
             voice = request.POST["voice"]
             voice = base64.b64decode(voice)
-
-        # instantiates a client
-        client = speech.SpeechClient()
-        audio = speech.RecognitionAudio(content=voice)
+            # instantiates a client
+            client = speech.SpeechClient()
+            audio = speech.RecognitionAudio(content=voice)
 
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,

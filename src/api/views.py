@@ -150,7 +150,7 @@ class VoiceChatbotView(APIView):
         response.write(f.read())
         response['Content-Type'] ='audio/wav'
         response['Content-Length'] =os.path.getsize(path)
-
+        print(response)
         return response
 
 

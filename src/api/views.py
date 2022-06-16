@@ -139,17 +139,10 @@ class VoiceChatbotView(APIView):
             chat_flag=1,
             voice=ContentFile(response.content),
         )
+        
+        response = Response(base64.b64encode(response.content))
+        response['result'] = json.dumps(result)
 
-        context['voice'] = base64.b64encode(response.content)
-        context['result'] = result
-
-        response = Response(
-            context,
-            content_type=u"application/json; charset=utf-8"
-            )
-        # response['result'] = result
-
-        # response = HttpResponse(context)
         return response
 
 

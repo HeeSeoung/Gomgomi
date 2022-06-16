@@ -144,7 +144,7 @@ class VoiceChatbotView(APIView):
         )
 
         result = io.BytesIO(response.content)
-        audio = AudioSegment.from_mp3(result)
+        audio = AudioSegment.from_file(result)
         path = f'./media/{get_random_string(length=16)}.wav'
         audio.export(path, format='wav')
 

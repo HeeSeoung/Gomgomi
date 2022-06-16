@@ -140,9 +140,21 @@ class VoiceChatbotView(APIView):
             voice=ContentFile(response.content),
         )
 
-        response = HttpResponse(response.content)
+        result = io.BytesIO(response.content)
+        audio = AudioSegment.from_file(result, "mp3")
+        path = f'./media/{get_random_string(length=16)}.mp3'
+        audio.export(path, format='wav')
 
+        f = open(path,"rb") 
+        response = HttpResponse()
+        response.write(f.read())
+        response['Content-Type'] ='audio/wav'
+        response['Content-Length'] =os.path.getsize(path)
+        print(response)
         return response
+        
+        # response = HttpResponse(base64.b64encode(response.content))
+        # return response
 
 
 class SentimentView(APIView):

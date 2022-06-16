@@ -83,7 +83,7 @@ class VoiceChatbotView(APIView):
 
         user = request.user.id
         queryset = chat_info.objects.filter(user=user)
-        serializers = ChatbotSerializer(queryset, many=True)
+        serializers = VoiceChatbotSerializer(queryset, many=True)
 
         return Response(serializers.data)
 

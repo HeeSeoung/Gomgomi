@@ -90,7 +90,8 @@ class VoiceChatbotView(APIView):
         context = {}
         try:
             voice = request.FILES["voice"]
-        except Exception:
+        except Exception as e:
+            print(e)
             voice = request.POST["voice"]
             voice = base64.b64decode(voice)
 

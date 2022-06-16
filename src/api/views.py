@@ -127,7 +127,7 @@ class VoiceChatbotView(APIView):
             "Authorization": f"KakaoAK 80b269050cd58c9743d68720ddc84692",
             "Content-Type": "application/xml",
         }
-        data = f'<speak><kakao:effect tone="friendly"><voice name="WOMAN_DIALOG_BRIGHT">{result}</voice></kakao:effect></speak>'
+        data = f'<speak><kakao:effect tone="friendly"><voice>{result}</voice></kakao:effect></speak>'
         response = requests.post(
             "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",
             headers=headers,
@@ -152,7 +152,7 @@ class VoiceChatbotView(APIView):
         response['Content-Length'] =os.path.getsize(path)
         print(response)
         return response
-        
+
         # response = HttpResponse(base64.b64encode(response.content))
         # return response
 

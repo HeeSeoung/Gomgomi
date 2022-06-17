@@ -17,7 +17,6 @@
 |Web Framework|Django|FastAPI|
 |Database|MariaDB| - |
 |Formatter|black|black|
-|Deployment|Google Cloud Platform|Google Cloud Platform|
 
 ## AI Model
 **Kobart Chatbot**

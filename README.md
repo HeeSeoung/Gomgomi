@@ -1,5 +1,4 @@
-# Gomgomi
- [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)]()
+# Gomgomi  [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)]()
 <img width="1167" alt="vdvd" src="https://user-images.githubusercontent.com/74298527/173801241-3edce447-565a-41ff-a625-337f54a8e838.png">
 
 ## 앱 구조

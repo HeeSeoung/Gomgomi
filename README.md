@@ -10,6 +10,14 @@
 - Airflow를 활용해 사용자의 대화 내용을 기반으로 한 감정 분석 결과를 Batch Serving해서 DB에 반영할 수 있도록 개발했습니다.
 - GCP(Google Cloud Platform)를 활용해 백엔드와 AI 서버를 구축했습니다.
 
+# 기술 스택
+|Category| - |
+| --- | --- |
+|Language|Python|
+|Web Framework|Django|
+|Database|MariaDB|
+|CD|Google Cloud Platform|
+
 ## AI Model
 **Kobart Chatbot**
 ```

@@ -2,7 +2,7 @@
 <img width="1167" alt="vdvd" src="https://user-images.githubusercontent.com/74298527/173801241-3edce447-565a-41ff-a625-337f54a8e838.png">
 
 ## 앱 구조
-<center><img width="783" alt="ㅇㅇㅇㅇㅇ" src="https://user-images.githubusercontent.com/74298527/173318965-0e97c343-7c6d-4179-887e-4ceff4d08ef5.png"></center>
+<p align="center"><img width="783" alt="ㅇㅇㅇㅇㅇ" src="https://user-images.githubusercontent.com/74298527/173318965-0e97c343-7c6d-4179-887e-4ceff4d08ef5.png"></p>
 
 ## 개발 의의
 - Google STT, Kakao TTS API를 활용해 서비스에 적용했습니다.

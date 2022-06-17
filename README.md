@@ -16,6 +16,7 @@
 |Language|Python|
 |Web Framework|Django|
 |Database|MariaDB|
+|Formatter|black|
 |CD|Google Cloud Platform|
 
 ## AI Model

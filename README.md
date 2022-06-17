@@ -11,13 +11,13 @@
 - GCP(Google Cloud Platform)를 활용해 백엔드와 AI 서버를 구축했습니다.
 
 ## 기술 스택
-|Category| - | - |
-| --- |Backend|AI|
+|Category|Backend|AI|
+| --- | --- | --- |
 |Language|Python|Python|
 |Web Framework|Django|FastAPI|
 |Database|MariaDB| - |
 |Formatter|black|black|
-|CD|Google Cloud Platform|Google Cloud Platform|
+|Deployment|Google Cloud Platform|Google Cloud Platform|
 
 ## AI Model
 **Kobart Chatbot**

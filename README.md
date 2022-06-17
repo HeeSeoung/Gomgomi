@@ -12,10 +12,10 @@
 
 ## 기술 스택
 |Category| - | - |
-| --- | Backend | AI |
+| --- |Backend|AI|
 |Language|Python|Python|
 |Web Framework|Django|FastAPI|
-|Database|MariaDB||
+|Database|MariaDB| - |
 |Formatter|black|black|
 |CD|Google Cloud Platform|Google Cloud Platform|
 

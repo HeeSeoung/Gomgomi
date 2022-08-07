@@ -27,7 +27,7 @@ from .serializers import (
 
 os.environ[
     "GOOGLE_APPLICATION_CREDENTIALS"
-] = "/home/gnltmd23/google/vivid-spot-352208-f7e0462f8e6d.json"
+] = "/home/gnltmd27/google/protean-sunup-358707-0d2f46737b89.json"
 
 
 class QuotesViewSet(viewsets.ModelViewSet):

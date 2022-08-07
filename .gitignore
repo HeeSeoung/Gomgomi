@@ -1,4 +1,5 @@
-/config/conf_test.yaml
-/config/conf.yaml
+config/conf_test.yaml
 *.DS_Store
 .vscode/
+src/config/conf.yaml
+src/config/conf_test.yaml

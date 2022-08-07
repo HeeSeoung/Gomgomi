@@ -65,7 +65,7 @@ class ChatbotView(APIView):
         create_chatinfo(user=request.user.id, context=sent, chat_flag=0)
         data = {"sent": sent}
         response = requests.post(
-            "http://0.0.0.0:8100/predict", data=json.dumps(data)
+            "http://127.0.0.1:8100/predict", data=json.dumps(data)
         )
         result = response.json()["response"]
         create_chatinfo(
@@ -118,7 +118,7 @@ class VoiceChatbotView(APIView):
         # request chatbot api
         data = {"sent": text}
         response = requests.post(
-            "http://0.0.0.0:8100/predict", data=json.dumps(data)
+            "http://127.0.0.1:8100/predict", data=json.dumps(data)
         )
         result = response.json()["response"]
 
